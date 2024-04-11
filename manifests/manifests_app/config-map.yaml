@@ -8,5 +8,5 @@ data:
   MIGRATIONS_SOURCE: 'file://db/migrations'
   POSTGRES_HOST: 'postgres-postgresql'
   POSTGRES_PORT: '5432'
-  POSTGRES_DB: 'postgres'
+  POSTGRES_DB: 'users'
   PORT: '8000'

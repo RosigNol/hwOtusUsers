@@ -1,11 +1,23 @@
 auth:
   enablePostgresUser: true
   postgresPassword: "password"
-  username: "postgres"
+  username: "user"
   password: "password"
-  database: "postgres"
+  database: "users"
+
+global:
+  postgresql:
+    auth:
+      postgresPassword: "password"
+      username: "user"
+      password: "password"
+      database: "users"
 
 primary:
   persistence:
     enabled: true
     existingClaim: "postgres-pv-claim"
+  securityContext:
+    enabled: true
+    fsGroup: 70
+    runAsUser: 70

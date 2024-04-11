@@ -6,12 +6,16 @@ import (
 	"log"
 	"net/http"
 	"embed"
+	"time"
+	"math/rand"
 	"github.com/gin-gonic/gin"
 	"otusHWUsers/config"
 	"otusHWUsers/routes"
 	"otusHWUsers/controllers"
 	dbConn "otusHWUsers/db/sqlc"
 	_ "github.com/lib/pq"
+	ginMonitor "github.com/bancodobrasil/gin-monitor"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -48,18 +52,27 @@ func init() {
 }
 
 func main() {
-
 	config, err := config.LoadConfig(".")
 
 	if err != nil {
 		log.Fatalf("could not load config: %v", err)
 	}
 
-	router := server.Group("/api")
+	monitor, err := ginMonitor.New("v1.0.0", ginMonitor.DefaultErrorMessageKey, []float64{0.5, 0.95, 0.99})
+	if err != nil {
+	    panic(err)
+	}
 
+	server.Use(monitor.Prometheus())
+
+	server.GET("/metrics", gin.WrapH(promhttp.Handler()))
+
+	router := server.Group("/api")
 	router.GET("/healthchecker", func(ctx *gin.Context) {
+		time.Sleep(time.Duration(rand.Intn(100000-1) + 1) * time.Millisecond)
 		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
+
 
 	UserRoutes.UserRoute(router)
 
