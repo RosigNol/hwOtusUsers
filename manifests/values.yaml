@@ -5,19 +5,7 @@ auth:
   password: "password"
   database: "users"
 
-global:
-  postgresql:
-    auth:
-      postgresPassword: "password"
-      username: "user"
-      password: "password"
-      database: "users"
-
 primary:
   persistence:
-    enabled: true
+    enabled: false
     existingClaim: "postgres-pv-claim"
-  securityContext:
-    enabled: true
-    fsGroup: 70
-    runAsUser: 70

@@ -79,8 +79,8 @@ func main() {
 	})
 
 
-	// AuthRoutes.AuthRoute(router)
-	UserRoutes.UserRoute(router)
+	AuthRoutes.AuthRoute(router)
+	// UserRoutes.UserRoute(router)
 
 	server.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{"status": "fail", "message": fmt.Sprintf("Route %s not found", ctx.Request.URL)})

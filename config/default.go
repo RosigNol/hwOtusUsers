@@ -3,8 +3,7 @@ package config
 import (
 	"os"
 	// "log"
-	// "fmt"
-	//"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 type Config struct {
@@ -20,24 +19,17 @@ type Config struct {
 
 	AccessTokenPrivateKey  string        "ACCESS_TOKEN_PRIVATE_KEY"
 	AccessTokenPublicKey   string        "ACCESS_TOKEN_PUBLIC_KEY"
-	RefreshTokenPrivateKey string        "REFRESH_TOKEN_PRIVATE_KEY"
-	RefreshTokenPublicKey  string        "REFRESH_TOKEN_PUBLIC_KEY"
-	AccessTokenExpiresIn   time.Duration "ACCESS_TOKEN_EXPIRED_IN"
-	RefreshTokenExpiresIn  time.Duration "REFRESH_TOKEN_EXPIRED_IN"
-	AccessTokenMaxAge      int           "ACCESS_TOKEN_MAXAGE"
-	RefreshTokenMaxAge     int           "REFRESH_TOKEN_MAXAGE"
 }
 
 func LoadConfig(path string) (config Config, err error) {
-	err = godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error getting env, %v", err)
-	} else {
-		fmt.Println("We are getting values")
-	}
+	// err = godotenv.Load()
+	// if err != nil {
+	// 	log.Fatalf("Error getting env, %v", err)
+	// }
 	return Config{
 		PostgreDriver:  os.Getenv("POSTGRES_DRIVER"),
 		Host: os.Getenv("POSTGRES_HOST"),
+		Port: os.Getenv("PORT"),
 		PortPG: os.Getenv("POSTGRES_PORT"),
 		User: os.Getenv("POSTGRES_USER"),
 		DBName: os.Getenv("POSTGRES_DB"),
@@ -46,11 +38,5 @@ func LoadConfig(path string) (config Config, err error) {
 		Origin: os.Getenv("ORIGIN"),
 		AccessTokenPrivateKey: os.Getenv("ACCESS_TOKEN_PRIVATE_KEY"),
 		AccessTokenPublicKey: os.Getenv("ACCESS_TOKEN_PUBLIC_KEY"),
-		RefreshTokenPrivateKey: os.Getenv("REFRESH_TOKEN_PRIVATE_KEY"),
-		RefreshTokenPublicKey: os.Getenv("REFRESH_TOKEN_PUBLIC_KEY"),
-		AccessTokenExpiresIn: os.Getenv("ACCESS_TOKEN_EXPIRED_IN"),
-		RefreshTokenExpiresIn: os.Getenv("REFRESH_TOKEN_EXPIRED_IN"),
-		AccessTokenMaxAge: os.Getenv("ACCESS_TOKEN_MAXAGE"),
-		RefreshTokenMaxAge: os.Getenv("REFRESH_TOKEN_MAXAGE"),
 	}, err
 }
