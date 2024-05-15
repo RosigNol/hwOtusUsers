@@ -1,0 +1,14 @@
+FROM golang:1.22.2-alpine AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod download
+RUN go build auth.go
+
+FROM alpine:latest as release
+EXPOSE 8000
+COPY --from=build /app/auth /server
+ENTRYPOINT ["/server"]
+CMD ["-port", "8000"]

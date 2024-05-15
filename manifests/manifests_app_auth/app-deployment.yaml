@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-postgres
+  name: app-postgres-auth
   labels:
-    app: app-postgres
+    app: app-postgres-auth
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: app-postgres
+      app: app-postgres-auth
   template:
     metadata:
       labels:
-        app: app-postgres
+        app: app-postgres-auth
     spec:
       containers:
-      - name: app-postgres
-        image: rosignol/gin_users_hw:1.1.4
+      - name: app-postgres-auth
+        image: rosignol/gin_users_auth:0.1.1
         imagePullPolicy: IfNotPresent
         ports:
         - name: web

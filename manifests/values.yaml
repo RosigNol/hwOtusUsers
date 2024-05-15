@@ -1,11 +1,11 @@
 auth:
   enablePostgresUser: true
   postgresPassword: "password"
-  username: "postgres"
+  username: "user"
   password: "password"
-  database: "postgres"
+  database: "users"
 
 primary:
   persistence:
-    enabled: true
+    enabled: false
     existingClaim: "postgres-pv-claim"

@@ -4,14 +4,31 @@ metadata:
   name: app-postgres
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-url: "http://arch.homework/api/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "http://arch.homework/api/auth/login"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-Token"
 spec:
   ingressClassName: nginx
   rules:
     - host: arch.homework
       http:
           paths:
-            - path: /
+            - path: /api/healthchecker
               pathType: Prefix
+              backend:
+                service:
+                  name: app-postgres
+                  port:
+                    number: 8000
+            - path: /metrics
+              pathType: Prefix
+              backend:
+                service:
+                  name: app-postgres
+                  port:
+                    number: 8000
+            - path: /api/user/.*
+              pathType: ImplementationSpecific
               backend:
                 service:
                   name: app-postgres
